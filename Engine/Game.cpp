@@ -27,15 +27,12 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd ),
 	board(gfx),
-	random_num_generator( std::random_device()() ),
 	player({20, 15}),
-	xDist(0, 38),
-	yDist(0, 28),
-	food({ xDist(random_num_generator), yDist(random_num_generator) })
+	food()
 {
+	FRAME_PER_MOVEMENT = 10;
 	delta_location = { 1, 0 };
 	moveCounter = 0;
-	FRAME_PER_MOVEMENT = 10;
 	gameOver = false;
 	gameStarted = false;
 }
@@ -84,12 +81,10 @@ void Game::UpdateModel()
 		{
 			player.grow();
 			// WHEN SNAKE EATS FOOD, RESPAWN FOOD AT NEW LOCATION
-			Location newFoodCordinate;
 			do
 			{
-				newFoodCordinate = { xDist(random_num_generator), yDist(random_num_generator) };
-			} while (player.checkForCollision(newFoodCordinate));
-			food.setCordinate(newFoodCordinate);
+				food.respawn();
+			} while (player.checkForCollision(food.cordinate));
 
 			if (FRAME_PER_MOVEMENT > 5)
 			{

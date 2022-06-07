@@ -2,16 +2,20 @@
 
 #include "Snake.h"
 #include "Location.h"
+#include <random>
 
 class Food
 {
 public:
-	Food(const Location& _cordinate);
+	Food();
 	void draw(Board& board);
-	void setCordinate(const Location& _cordinate);
+	void respawn();
 	bool isEaten(const Snake& player);
-
-private:
+public:
 	Location cordinate;
+private:
+	std::mt19937 random_num_generator;
+	std::uniform_int_distribution<int> xDist;
+	std::uniform_int_distribution<int> yDist;
 };
 
