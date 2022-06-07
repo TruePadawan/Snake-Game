@@ -1,11 +1,8 @@
 #include "Food.h"
 
-Food::Food()
-	:random_num_generator(std::random_device()()),
-	xDist(0, 38),
-	yDist(0, 28)
+Food::Food(const Location& _cordinate)
 {
-	cordinate = { xDist(random_num_generator), yDist(random_num_generator) };
+	cordinate = _cordinate;
 }
 
 void Food::draw(Board& board)
@@ -13,9 +10,9 @@ void Food::draw(Board& board)
 	board.drawCell(cordinate, Colors::Gray);
 }
 
-void Food::respawn()
+void Food::setCordinate(const Location& _cordinate)
 {
-	cordinate = { xDist(random_num_generator), yDist(random_num_generator) };
+	cordinate = _cordinate;
 }
 
 bool Food::isEaten(const Snake& player)
