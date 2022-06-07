@@ -26,7 +26,6 @@
 #include "Board.h"
 #include "Snake.h"
 #include "Food.h"
-#include <random>
 
 class Game
 {
@@ -46,9 +45,6 @@ private:
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
-	std::mt19937 random_num_generator;
-	std::uniform_int_distribution<int> xDist;
-	std::uniform_int_distribution<int> yDist;
 	Board board;
 	Snake player;
 	Food food;
