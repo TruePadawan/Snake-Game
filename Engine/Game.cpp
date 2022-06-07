@@ -78,13 +78,12 @@ void Game::UpdateModel()
 		delta_location = { 1, 0 };
 	}
 
-
 	if (moveCounter == FRAME_PER_MOVEMENT)
 	{
 		if (food.isEaten(player))
 		{
 			player.grow();
-
+			// WHEN SNAKE EATS FOOD, RESPAWN FOOD AT NEW LOCATION
 			Location newFoodCordinate;
 			do
 			{
@@ -95,19 +94,20 @@ void Game::UpdateModel()
 			if (FRAME_PER_MOVEMENT > 5)
 			{
 				--FRAME_PER_MOVEMENT;
-
 			}
 		}
+		// IF THE SNAKE'S HEAD COLLIDES WITH ITS BODY PART, GAME OVER
 		if (player.checkForCollision(player.getHeadCordinate()))
 		{
 			gameOver = true;
 		}
 
 		moveCounter = 0;
-		player.moveBy(delta_location);
+		player.moveBy(delta_location); // MOVE SNAKE EVERY NUMBER OF FRAMES SPECIFIED BY 'FRAME_PER_MOVEMENT'
 	}
 	++moveCounter;
 
+	// IF SNAKE COLLIDES WITH WALL, GAME OVER
 	if (player.isAtBoundary())
 	{
 		gameOver = true;
