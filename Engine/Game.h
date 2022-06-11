@@ -26,6 +26,7 @@
 #include "Board.h"
 #include "Snake.h"
 #include "Food.h"
+#include "FrameTimer.h"
 
 class Game
 {
@@ -49,8 +50,9 @@ private:
 	Snake player;
 	Food food;
 	Location delta_location;
-	int FRAME_PER_MOVEMENT;
-	int moveCounter;
+	FrameTimer frameTimer;
+	float MILLISECONDS_PER_MOVEMENT;
+	float moveCounter;
 	bool gameOver;
 	bool gameStarted;
 	/********************************/

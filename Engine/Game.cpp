@@ -28,11 +28,11 @@ Game::Game( MainWindow& wnd )
 	gfx( wnd ),
 	board(gfx),
 	player({20, 15}),
-	food()
+	food(), frameTimer()
 {
-	FRAME_PER_MOVEMENT = 10;
+	MILLISECONDS_PER_MOVEMENT = 0.1f;
 	delta_location = { 1, 0 };
-	moveCounter = 0;
+	moveCounter = 0.0f;
 	gameOver = false;
 	gameStarted = false;
 }
@@ -75,7 +75,7 @@ void Game::UpdateModel()
 		delta_location = { 1, 0 };
 	}
 
-	if (moveCounter == FRAME_PER_MOVEMENT)
+	if (moveCounter >= MILLISECONDS_PER_MOVEMENT)
 	{
 		if (food.isEaten(player))
 		{
@@ -86,9 +86,9 @@ void Game::UpdateModel()
 				food.respawn();
 			} while (player.checkForCollision(food.cordinate));
 
-			if (FRAME_PER_MOVEMENT > 5)
+			if (MILLISECONDS_PER_MOVEMENT > 0.05f)
 			{
-				--FRAME_PER_MOVEMENT;
+				MILLISECONDS_PER_MOVEMENT -= 0.005f;
 			}
 		}
 		// IF THE SNAKE'S HEAD COLLIDES WITH ITS BODY PART, GAME OVER
@@ -96,11 +96,11 @@ void Game::UpdateModel()
 		{
 			gameOver = true;
 		}
-
-		moveCounter = 0;
-		player.moveBy(delta_location); // MOVE SNAKE EVERY NUMBER OF FRAMES SPECIFIED BY 'FRAME_PER_MOVEMENT'
+		
+		moveCounter = 0.0f;
+		player.moveBy(delta_location); // MOVE SNAKE EVERY NUMBER OF FRAMES SPECIFIED BY 'MILLISECONDS_PER_MOVEMENT'
 	}
-	++moveCounter;
+	moveCounter += frameTimer.timeInterval();
 
 	// IF SNAKE COLLIDES WITH WALL, GAME OVER
 	if (player.isAtBoundary())
@@ -123,15 +123,6 @@ void Game::ComposeFrame()
 		return;
 	}
 
-
-	/*for (int y = 0; y < Board::CELL_PER_HEIGHT; y++)
-	{
-		for (int x = 0; x < Board::CELL_PER_WIDTH; x++)
-		{
-			Location cordinate{ x, y };
-			board.drawCell(cordinate, Colors::LightGray);
-		}
-	}*/
 	player.draw(board);
 	food.draw(board);
 	board.drawBoundary();
