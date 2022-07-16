@@ -35,6 +35,19 @@ Game::Game( MainWindow& wnd )
 	moveCounter = 0.0f;
 	gameOver = false;
 	gameStarted = false;
+
+	obstacles.push_back(Obstacle({ 1, 1 }));
+	obstacles.push_back(Obstacle({ 2, 1 }));
+	obstacles.push_back(Obstacle({ 1, 2 }));
+	obstacles.push_back(Obstacle({ 2, 2 }));
+	obstacles.push_back(Obstacle({ 1, 3 }));
+	obstacles.push_back(Obstacle({ 2, 3 }));
+
+	for (const Obstacle& obs : obstacles)
+	{
+		Location obsLocation{ obs.getLocation() };
+		obstacleLocations[obsLocation.x][obsLocation.y] = obsLocation;
+	}
 }
 
 void Game::Go()
@@ -107,6 +120,14 @@ void Game::UpdateModel()
 	{
 		gameOver = true;
 	}
+	else {
+		Location playerCoord{ player.getHeadCordinate() };
+		Location obsLoc{ obstacleLocations[playerCoord.x][playerCoord.y] };
+		if (obsLoc == playerCoord)
+		{
+			gameOver = true;
+		}
+	}
 }
 
 void Game::ComposeFrame()
@@ -121,6 +142,11 @@ void Game::ComposeFrame()
 	{
 		SpriteCodex::DrawTitle(326, 213, gfx);
 		return;
+	}
+	
+	for (const Obstacle& obs : obstacles)
+	{
+		obs.draw(board);
 	}
 
 	player.draw(board);

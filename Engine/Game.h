@@ -27,6 +27,8 @@
 #include "Snake.h"
 #include "Food.h"
 #include "FrameTimer.h"
+#include "Obstacle.h"
+#include <vector>
 
 class Game
 {
@@ -55,5 +57,7 @@ private:
 	float moveCounter;
 	bool gameOver;
 	bool gameStarted;
+	std::vector<Obstacle> obstacles;
+	Location obstacleLocations[Board::CELL_PER_WIDTH][Board::CELL_PER_HEIGHT];
 	/********************************/
 };

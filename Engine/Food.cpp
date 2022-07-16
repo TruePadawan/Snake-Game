@@ -10,7 +10,7 @@ Food::Food()
 
 void Food::draw(Board& board)
 {
-	board.drawCell(cordinate, Colors::Gray);
+	board.drawCell(cordinate, Colors::Green);
 }
 
 void Food::respawn()
