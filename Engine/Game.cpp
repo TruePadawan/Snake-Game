@@ -58,19 +58,19 @@ void Game::UpdateModel()
 		return;
 	}
 
-	if (wnd.kbd.KeyIsPressed(VK_UP))
+	if (wnd.kbd.KeyIsPressed(VK_UP) && delta_location.y != 1)
 	{
 		delta_location = { 0, -1 };
 	}
-	if (wnd.kbd.KeyIsPressed(VK_DOWN))
+	if (wnd.kbd.KeyIsPressed(VK_DOWN) && delta_location.y != -1)
 	{
 		delta_location = { 0, 1 };
 	}
-	if (wnd.kbd.KeyIsPressed(VK_LEFT))
+	if (wnd.kbd.KeyIsPressed(VK_LEFT) && delta_location.x != 1)
 	{
 		delta_location = { -1, 0 };
 	}
-	if (wnd.kbd.KeyIsPressed(VK_RIGHT))
+	if (wnd.kbd.KeyIsPressed(VK_RIGHT) && delta_location.x != -1)
 	{
 		delta_location = { 1, 0 };
 	}
