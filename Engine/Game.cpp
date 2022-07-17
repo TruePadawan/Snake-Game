@@ -42,6 +42,9 @@ Game::Game( MainWindow& wnd )
 	obstacles.push_back(Obstacle({ 2, 2 }));
 	obstacles.push_back(Obstacle({ 1, 3 }));
 	obstacles.push_back(Obstacle({ 2, 3 }));
+	obstacles.push_back(Obstacle({ 14, 4 }));
+	obstacles.push_back(Obstacle({ 15, 4 }));
+	obstacles.push_back(Obstacle({ 14, 5 }));
 
 	for (const Obstacle& obs : obstacles)
 	{
@@ -97,7 +100,7 @@ void Game::UpdateModel()
 			do
 			{
 				food.respawn();
-			} while (player.checkForCollision(food.cordinate));
+			} while (player.checkForCollision(food.cordinate) || foodCollidingWithObstacle());
 
 			if (MILLISECONDS_PER_MOVEMENT > 0.05f)
 			{
@@ -128,6 +131,12 @@ void Game::UpdateModel()
 			gameOver = true;
 		}
 	}
+}
+
+bool Game::foodCollidingWithObstacle()
+{
+	Location obsLoc{ obstacleLocations[food.cordinate.x][food.cordinate.y] };
+	return food.cordinate == obsLoc;
 }
 
 void Game::ComposeFrame()

@@ -42,6 +42,7 @@ private:
 	void UpdateModel();
 	/********************************/
 	/*  User Functions              */
+	bool foodCollidingWithObstacle();
 	/********************************/
 private:
 	MainWindow& wnd;
