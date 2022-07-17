@@ -144,7 +144,6 @@ void Game::ComposeFrame()
 	if (gameOver)
 	{
 		SpriteCodex::DrawGameOver(358, 268, gfx);
-		return;
 	}
 
 	if (!gameStarted)

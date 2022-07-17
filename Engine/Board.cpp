@@ -12,9 +12,9 @@ Board::Board(Graphics& _gfx, int _borderWidth , int _margin)
 void Board::drawCell(const Location& cordinates, Color c)
 {
 	assert(cordinates.x >= 0);
-	assert(cordinates.x < CELL_PER_WIDTH);
+	assert(cordinates.x <= CELL_PER_WIDTH-1);
 	assert(cordinates.y >= 0);
-	assert(cordinates.y < CELL_PER_HEIGHT);
+	assert(cordinates.y <= CELL_PER_HEIGHT-1);
 
 	int xCord = cordinates.x * CELL_DIMENSION + margin + borderWidth + cellPadding;
 	int yCord = cordinates.y * CELL_DIMENSION + margin + borderWidth + cellPadding;

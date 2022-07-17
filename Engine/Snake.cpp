@@ -40,8 +40,8 @@ Location Snake::getHeadCordinate() const
 bool Snake::isAtBoundary()
 {
 	const Location playerCord = this->getHeadCordinate();
-	return ((playerCord.x == Board::CELL_PER_WIDTH) ||
-		(playerCord.y == Board::CELL_PER_HEIGHT) ||
+	return ((playerCord.x == Board::CELL_PER_WIDTH-1) ||
+		(playerCord.y == Board::CELL_PER_HEIGHT-1) ||
 		(playerCord.x < 0 || playerCord.y < 0));
 }
 
