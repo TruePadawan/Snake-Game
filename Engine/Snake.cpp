@@ -45,10 +45,22 @@ bool Snake::isAtBoundary()
 		(playerCord.x < 0 || playerCord.y < 0));
 }
 
+bool Snake::collideWithSelf() const
+{
+	const Location headCoord{ this->getHeadCordinate() };
+	for (int i = 1; i < nSegments; ++i)
+	{
+		if (segments[i].cordinate == headCoord)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 bool Snake::checkForCollision(const Location& target) const
 {
-	if (nSegments == 1) return false;
-	for (int i = 1; i < nSegments; ++i)
+	for (int i = 0; i < nSegments; ++i)
 	{
 		if (segments[i].cordinate == target)
 		{

@@ -12,6 +12,7 @@ public:
 	void draw(Board& board) const;
 	Location getHeadCordinate() const;
 	bool isAtBoundary();
+	bool collideWithSelf() const;
 	bool checkForCollision(const Location &target) const;
 private:
 	class Segment

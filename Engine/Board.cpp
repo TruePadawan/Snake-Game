@@ -1,4 +1,6 @@
 #include "Board.h"
+#include "Food.h"
+#include "Snake.h"
 #include <assert.h>
 
 Board::Board(Graphics& _gfx, int _borderWidth , int _margin)
@@ -20,6 +22,33 @@ void Board::drawCell(const Location& cordinates, Color c)
 	int yCord = cordinates.y * CELL_DIMENSION + margin + borderWidth + cellPadding;
 	gfx.DrawRectDim(xCord, yCord, CELL_DIMENSION - cellPadding, CELL_DIMENSION - cellPadding, c);
 }
+
+void Board::spawnObstacle(std::mt19937& rng, const Food& food, const Snake& player)
+{
+	Location obsLoc{ 0,0 };
+	do
+	{
+		obsLoc.x = xDist(rng);
+		obsLoc.y = yDist(rng);
+	} while (player.checkForCollision(obsLoc) || food.cordinate == obsLoc);
+
+	obstacleLocations.push_back(obsLoc);
+	obstacles[obsLoc.x][obsLoc.y] = true;
+}
+
+bool Board::checkForObstacle(const Location& loc)
+{
+	return obstacles[loc.x][loc.y];
+}
+
+void Board::drawObstacles()
+{
+	for (const Location& obsLoc : obstacleLocations)
+	{
+		drawCell(obsLoc, Colors::Gray);
+	}
+}
+
 
 void Board::drawBoundary()
 {

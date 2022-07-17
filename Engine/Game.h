@@ -27,8 +27,6 @@
 #include "Snake.h"
 #include "Food.h"
 #include "FrameTimer.h"
-#include "Obstacle.h"
-#include <vector>
 
 class Game
 {
@@ -42,13 +40,13 @@ private:
 	void UpdateModel();
 	/********************************/
 	/*  User Functions              */
-	bool foodCollidingWithObstacle();
 	/********************************/
 private:
 	MainWindow& wnd;
 	Graphics gfx;
 	/********************************/
 	/*  User Variables              */
+	std::mt19937 rng;
 	Board board;
 	Snake player;
 	Food food;
@@ -58,7 +56,5 @@ private:
 	float moveCounter;
 	bool gameOver;
 	bool gameStarted;
-	std::vector<Obstacle> obstacles;
-	Location obstacleLocations[Board::CELL_PER_WIDTH][Board::CELL_PER_HEIGHT];
 	/********************************/
 };

@@ -7,14 +7,13 @@
 class Food
 {
 public:
-	Food();
+	Food(std::mt19937& rng);
 	void draw(Board& board);
-	void respawn();
+	void respawn(std::mt19937& rng);
 	bool isEaten(const Snake& player);
 public:
 	Location cordinate;
 private:
-	std::mt19937 random_num_generator;
 	std::uniform_int_distribution<int> xDist;
 	std::uniform_int_distribution<int> yDist;
 };

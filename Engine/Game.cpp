@@ -27,41 +27,15 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd ),
 	board(gfx),
+	rng(std::random_device()()),
 	player({20, 15}),
-	food(), frameTimer()
+	food(rng), frameTimer()
 {
 	MILLISECONDS_PER_MOVEMENT = 0.1f;
 	delta_location = { 1, 0 };
 	moveCounter = 0.0f;
 	gameOver = false;
 	gameStarted = false;
-
-	obstacles.push_back(Obstacle({ 1, 1 }));
-	obstacles.push_back(Obstacle({ 2, 1 }));
-	obstacles.push_back(Obstacle({ 1, 2 }));
-	obstacles.push_back(Obstacle({ 2, 2 }));
-	obstacles.push_back(Obstacle({ 1, 3 }));
-	obstacles.push_back(Obstacle({ 2, 3 }));
-
-	obstacles.push_back(Obstacle({ 14, 6 }));
-	obstacles.push_back(Obstacle({ 15, 6 }));
-	obstacles.push_back(Obstacle({ 14, 7 }));
-
-	obstacles.push_back(Obstacle({ 1, 26 }));
-	obstacles.push_back(Obstacle({ 2, 26 }));
-	obstacles.push_back(Obstacle({ 1, 27 }));
-	obstacles.push_back(Obstacle({ 2, 27 }));
-
-	obstacles.push_back(Obstacle({ 36, 26 }));
-	obstacles.push_back(Obstacle({ 37, 26 }));
-	obstacles.push_back(Obstacle({ 36, 27 }));
-	obstacles.push_back(Obstacle({ 37, 27 }));
-
-	for (const Obstacle& obs : obstacles)
-	{
-		Location obsLocation{ obs.getLocation() };
-		obstacleLocations[obsLocation.x][obsLocation.y] = obsLocation;
-	}
 }
 
 void Game::Go()
@@ -110,8 +84,9 @@ void Game::UpdateModel()
 			// WHEN SNAKE EATS FOOD, RESPAWN FOOD AT NEW LOCATION
 			do
 			{
-				food.respawn();
-			} while (player.checkForCollision(food.cordinate) || foodCollidingWithObstacle());
+				food.respawn(rng);
+			} while (player.checkForCollision(food.cordinate) || board.checkForObstacle(food.cordinate));
+			board.spawnObstacle(rng, food, player);
 
 			if (MILLISECONDS_PER_MOVEMENT > 0.05f)
 			{
@@ -119,7 +94,7 @@ void Game::UpdateModel()
 			}
 		}
 		// IF THE SNAKE'S HEAD COLLIDES WITH ITS BODY PART, GAME OVER
-		if (player.checkForCollision(player.getHeadCordinate()))
+		if (player.collideWithSelf())
 		{
 			gameOver = true;
 		}
@@ -130,24 +105,10 @@ void Game::UpdateModel()
 	moveCounter += frameTimer.timeInterval();
 
 	// IF SNAKE COLLIDES WITH WALL OR AN OBSTACLE, GAME OVER
-	if (player.isAtBoundary())
+	if (player.isAtBoundary() || board.checkForObstacle(player.getHeadCordinate()))
 	{
 		gameOver = true;
 	}
-	else {
-		Location playerCoord{ player.getHeadCordinate() };
-		Location obsLoc{ obstacleLocations[playerCoord.x][playerCoord.y] };
-		if (obsLoc == playerCoord)
-		{
-			gameOver = true;
-		}
-	}
-}
-
-bool Game::foodCollidingWithObstacle()
-{
-	Location obsLoc{ obstacleLocations[food.cordinate.x][food.cordinate.y] };
-	return food.cordinate == obsLoc;
 }
 
 void Game::ComposeFrame()
@@ -163,13 +124,9 @@ void Game::ComposeFrame()
 		SpriteCodex::DrawTitle(326, 213, gfx);
 		return;
 	}
-	
-	for (const Obstacle& obs : obstacles)
-	{
-		obs.draw(board);
-	}
 
-	player.draw(board);
-	food.draw(board);
 	board.drawBoundary();
+	food.draw(board);
+	board.drawObstacles();
+	player.draw(board);
 }
