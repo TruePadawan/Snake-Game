@@ -42,9 +42,20 @@ Game::Game( MainWindow& wnd )
 	obstacles.push_back(Obstacle({ 2, 2 }));
 	obstacles.push_back(Obstacle({ 1, 3 }));
 	obstacles.push_back(Obstacle({ 2, 3 }));
-	obstacles.push_back(Obstacle({ 14, 4 }));
-	obstacles.push_back(Obstacle({ 15, 4 }));
-	obstacles.push_back(Obstacle({ 14, 5 }));
+
+	obstacles.push_back(Obstacle({ 14, 6 }));
+	obstacles.push_back(Obstacle({ 15, 6 }));
+	obstacles.push_back(Obstacle({ 14, 7 }));
+
+	obstacles.push_back(Obstacle({ 1, 26 }));
+	obstacles.push_back(Obstacle({ 2, 26 }));
+	obstacles.push_back(Obstacle({ 1, 27 }));
+	obstacles.push_back(Obstacle({ 2, 27 }));
+
+	obstacles.push_back(Obstacle({ 36, 26 }));
+	obstacles.push_back(Obstacle({ 37, 26 }));
+	obstacles.push_back(Obstacle({ 36, 27 }));
+	obstacles.push_back(Obstacle({ 37, 27 }));
 
 	for (const Obstacle& obs : obstacles)
 	{
