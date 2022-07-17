@@ -115,7 +115,7 @@ void Game::UpdateModel()
 	}
 	moveCounter += frameTimer.timeInterval();
 
-	// IF SNAKE COLLIDES WITH WALL, GAME OVER
+	// IF SNAKE COLLIDES WITH WALL OR AN OBSTACLE, GAME OVER
 	if (player.isAtBoundary())
 	{
 		gameOver = true;
