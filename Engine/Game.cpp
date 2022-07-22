@@ -31,7 +31,7 @@ Game::Game( MainWindow& wnd )
 	player({20, 15}),
 	food(rng), frameTimer()
 {
-	MILLISECONDS_PER_MOVEMENT = 0.1f;
+	SECONDS_PER_MOVEMENT = 0.1f;
 	delta_location = { 1, 0 };
 	moveCounter = 0.0f;
 	gameOver = false;
@@ -76,7 +76,7 @@ void Game::UpdateModel()
 		delta_location = { 1, 0 };
 	}
 
-	if (moveCounter >= MILLISECONDS_PER_MOVEMENT)
+	if (moveCounter >= SECONDS_PER_MOVEMENT)
 	{
 		if (food.isEaten(player))
 		{
@@ -88,9 +88,9 @@ void Game::UpdateModel()
 			} while (player.checkForCollision(food.cordinate) || board.checkForObstacle(food.cordinate));
 			board.spawnObstacle(rng, food, player);
 
-			if (MILLISECONDS_PER_MOVEMENT > 0.05f)
+			if (SECONDS_PER_MOVEMENT > 0.05f)
 			{
-				MILLISECONDS_PER_MOVEMENT -= 0.005f;
+				SECONDS_PER_MOVEMENT -= 0.005f;
 			}
 		}
 		// IF THE SNAKE'S HEAD COLLIDES WITH ITS BODY PART, GAME OVER

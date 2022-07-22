@@ -52,7 +52,7 @@ private:
 	Food food;
 	Location delta_location;
 	FrameTimer frameTimer;
-	float MILLISECONDS_PER_MOVEMENT;
+	float SECONDS_PER_MOVEMENT;
 	float moveCounter;
 	bool gameOver;
 	bool gameStarted;
